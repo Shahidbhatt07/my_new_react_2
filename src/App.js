@@ -1,42 +1,27 @@
-import { useState, useEffect, useRef } from 'react';
+import { useReducer } from 'react';
 import './App.css';
 import Header from './components/Header';
 
-
+const reducer = (state, action) => {
+  if (action.type == "INC"){
+    return state + 2;
+  } else if (action.type == "DEC") {
+    return state - 2;
+  } else if (action.type == "MUL") {
+    return state * 2;
+  }
+  return state;
+}
 function App() {
-  const [input, setInput] = useState("");
+  const [state, dispatch] = useReducer(reducer, 0);
 
-
-  // const input = useRef(0);
-  // const preState = useRef("");
-
-  // useEffect(() => {
-  //   counter.current = counter.current + 1;
-  // })
-
-  // useEffect(() => {
-  //   preState.current = input;
-  // }, [input])
-
-  const inputField = useRef();
-
-  const formHandle = (e) =>{
-    setInput(e.target.value)
-  }
-
-  const clickHandler = () => {
-    inputField.current.value = "Shahid";
-  }
   return (
-    <>
-      
+    <> 
       <Header />
-      {/* <input value={input} onChange={formHandle} /> */}
-      {/* <h4>Application has been rendered {counter.current}</h4> */}
-      {/* <h4>Previous state was { preState.current }</h4> */}
-
-      <input ref={inputField} value={input} onChange={formHandle} />
-      <button onClick={clickHandler}>Click Me</button>
+      <h1> {state} </h1>
+      <button onClick={()=>dispatch({type: "INC"})}>Increment</button>
+      <button onClick={()=>dispatch({type: "DEC"})}>Decrement</button>
+      <button onClick={()=>dispatch({type: "MUL"})}>Multiply</button>  
    </>
   );
 }

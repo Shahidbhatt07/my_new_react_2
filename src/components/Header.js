@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div>
       <div className="header">
-           <h1 > Learn useRef Hook</h1>
+           <h1 > Learn useReducer Hook</h1>
            </div>
     </div>
   )
