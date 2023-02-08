@@ -1,18 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import './App.css';
 import Header from './components/Header';
-import useFetch from './components/useFetch';
 
 function App() {
-  const [data] = useFetch("https://hub.dummyapis.com/employee?noofRecords=10&idStarts=1001")
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("");
   
+  const expensiveCalculation = (num) => {
+    for (let i = 0; i < 100000000; i++) { }
+    return num;
+  };
+
+  const calculation = useMemo(() =>
+  expensiveCalculation(count)
+  , [count]) 
+
   return (
     <>
       <Header />
-      {data.map((e, i) => {
-        return <h1 key={i}>{e.firstName}</h1>
-      })
-      }
+      <button onClick={()=> setCount(count + 1)}>Increment</button>
+      <h1>Count: {count}</h1>
+      
+      <input onChange={(e) => setName(e.target.value)} />
+      <h1>Name: {name}</h1>
     </>
   );
 }

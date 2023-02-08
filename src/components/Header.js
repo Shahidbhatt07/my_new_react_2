@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div>
       <div className="header">
-           <h1 > React Custom Hook</h1>
+           <h1 > Learn useMemo Hook</h1>
            </div>
     </div>
   )
