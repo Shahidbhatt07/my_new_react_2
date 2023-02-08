@@ -1,23 +1,45 @@
-import { useState, createContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import ComA from './components/ComA';
-import ComB from './components/ComB';
-import ComC from './components/ComC';
 import Header from './components/Header';
 
-const AppState = createContext();
+
 function App() {
-  const [data, setData] = useState("Web3Mantra");
-  const [name, setName] = useState({ name: "Shahid", age: 23})
+  const [input, setInput] = useState("");
+
+
+  // const input = useRef(0);
+  // const preState = useRef("");
+
+  // useEffect(() => {
+  //   counter.current = counter.current + 1;
+  // })
+
+  // useEffect(() => {
+  //   preState.current = input;
+  // }, [input])
+
+  const inputField = useRef();
+
+  const formHandle = (e) =>{
+    setInput(e.target.value)
+  }
+
+  const clickHandler = () => {
+    inputField.current.value = "Shahid";
+  }
   return (
     <>
-      <AppState.Provider value={{data, name}}>
-          <Header/>
-          <ComA/>
-      </AppState.Provider>
+      
+      <Header />
+      {/* <input value={input} onChange={formHandle} /> */}
+      {/* <h4>Application has been rendered {counter.current}</h4> */}
+      {/* <h4>Previous state was { preState.current }</h4> */}
+
+      <input ref={inputField} value={input} onChange={formHandle} />
+      <button onClick={clickHandler}>Click Me</button>
    </>
   );
 }
 
 export default App;
-export { AppState }
+
