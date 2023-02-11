@@ -1,32 +1,40 @@
 import './App.css';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import Header from './components/Header';
-import Todos from './components/Todos';
+import { TailSpin } from 'react-loader-spinner'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [todos, setTodos] = useState([]);
-  
-  const increment = () => {
-    setCount((c)=>c+1)
-  }
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+ 
+  useEffect(() => {
+    setLoading(true);
+    async function getData() {
+      const res = await fetch('https://hub.dummyapis.com/employee?noofRecords=1000&idStarts=1001')
+      const finalRes = await res.json();
+      setData(finalRes)
+      console.log(finalRes)
+      setLoading(false);
+      toast.success("successfully fetched data");
 
-  const addTodo = useCallback(() => {
-    setTodos((t) => [...t, "New Todo"])
-  }, [todos]);
-  
+    }
+    getData();
+  }, [])
 
   return (
     <>
       <Header />
-      <div>
-        count: {count}
-        <button onClick={increment}>+</button>
+      <ToastContainer/>
+      <div className='main'>
+        {loading ? <TailSpin/> :
+        data.map((e, i) => {
+          return (
+            <p>{e.email}</p>
+          )
+        })}
       </div>
-
-      <hr />
-
-      <Todos todos ={todos} addTodo={addTodo} />
     </>
   );
 }
